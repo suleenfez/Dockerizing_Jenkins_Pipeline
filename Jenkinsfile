@@ -10,22 +10,8 @@ pipeline {
                 echo 'This stage will be executed first'
                 }
         }
-
-	stage('Initialize'){
-		def dockerhome=tool 'docker'
-		env.PATH="${dockerHome}/bin:${env.PATH}"
-	}
-	
-        stage ('Push to Docker Registry'){
-	      withCredentials([usernamePassword(credentialsId:'dockerHubAccount',usernameVariable: 'USERNAME',
-						passwordVariable: 'PASSWORD')]) {
-		      pushToImage(CONTAINER_NAME,CONTAINER_TAG,USERNAME,PASSWORD)
-		}
-	       
-	}
 	    
-		 
-	    
+		    
         stage('Run Tests') {
             parallel {
                 stage('Test On Windows') {
@@ -47,5 +33,18 @@ pipeline {
                 }
             }
         }
+	    
+	stage('Initialize'){
+		def dockerhome=tool 'docker'
+		env.PATH="${dockerHome}/bin:${env.PATH}"
+	}
+	
+        stage ('Push to Docker Registry'){
+	      withCredentials([usernamePassword(credentialsId:'dockerHubAccount',usernameVariable: 'USERNAME',
+						passwordVariable: 'PASSWORD')]) {
+		      pushToImage(CONTAINER_NAME,CONTAINER_TAG,USERNAME,PASSWORD)
+		}
+	       
+	}
     }
 }
