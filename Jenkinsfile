@@ -26,11 +26,13 @@ pipeline
 			    }
 			    steps {
 							echo "Task1 on Master"
-						}
+			    }
 			}
 		    }
 		}
-		post {
+	}
+}
+post {
 			always {
 				node('Push to Docker Registry'){
 					steps{
@@ -39,11 +41,6 @@ pipeline
 						}
 					}
 				}
-			}
-		}
-	}
-}
-
 
 
 def pushToImage(containerName, tag, dockerUser, dockerPassword){
