@@ -10,6 +10,8 @@ pipeline {
 		 parallel {
 			 withCredentials([usernamePassword(credentialsId: 'dockerHubAccount', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
 				 pushToImage(CONTAINER_NAME, CONTAINER_TAG, USERNAME, PASSWORD) }
+			   steps {	echo 'This stage will be executed first'
+				 }
 		 }
 	}
 	}
