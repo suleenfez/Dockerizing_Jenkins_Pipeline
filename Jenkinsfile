@@ -3,7 +3,9 @@ def CONTAINER_TAG="latest"
 def DOCKER_HUB_USER="scetin1337"
 def HTTP_PORT="8090"
 
-node {
+pipeline
+{
+	agent none
 	stage('Non-Parallel Stage') {
 	    agent {
                         label "master"
@@ -45,6 +47,8 @@ node {
 	}
 }
 
+
+		
 
 
 def imagePrune(containerName){
