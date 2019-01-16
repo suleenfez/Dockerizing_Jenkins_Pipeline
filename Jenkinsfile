@@ -30,7 +30,7 @@ pipeline
 			}
 		    }
 		}
-		node('Push to Docker Registry'){
+		stage('Push to Docker Registry'){
 			steps{
 				withCredentials([usernamePassword(credentialsId: 'dockerHubAccount', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
 					pushToImage(CONTAINER_NAME, CONTAINER_TAG, USERNAME, PASSWORD)
