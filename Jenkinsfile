@@ -37,6 +37,8 @@ pipeline
 				}
 			}
 		}
+	}
+}
 				
 
 def pushToImage(containerName, tag, dockerUser, dockerPassword){
