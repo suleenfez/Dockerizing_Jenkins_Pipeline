@@ -7,9 +7,11 @@ pipeline {
     agent none   
 	stages{
 	stage('Push to Docker Registry'){
-        withCredentials([usernamePassword(credentialsId: 'dockerHubAccount', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-            pushToImage(CONTAINER_NAME, CONTAINER_TAG, USERNAME, PASSWORD) }
- 	   }
+		 parallel {
+			 withCredentials([usernamePassword(credentialsId: 'dockerHubAccount', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+				 pushToImage(CONTAINER_NAME, CONTAINER_TAG, USERNAME, PASSWORD) }
+		 }
+	}
 	}
 }
 
