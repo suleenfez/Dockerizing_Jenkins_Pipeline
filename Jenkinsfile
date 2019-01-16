@@ -41,7 +41,9 @@ post {
 						}
 					}
 				}
-
+			}
+}
+				
 
 def pushToImage(containerName, tag, dockerUser, dockerPassword){
     sh "docker login -u $dockerUser -p $dockerPassword"
