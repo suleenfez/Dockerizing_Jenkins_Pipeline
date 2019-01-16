@@ -32,17 +32,12 @@ pipeline {
         }
 	    
 	stage('Push to Docker Registry'){
-		parallel {
-        withCredentials([usernamePassword(credentialsId: 'dockerHubAccount', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-            pushToImage(CONTAINER_NAME, CONTAINER_TAG, USERNAME, PASSWORD)
-        
-			 steps {
-						echo "Task1 on Master"
+		withCredentials([usernamePassword(credentialsId: 'dockerHubAccount', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+			pushToImage(CONTAINER_NAME, CONTAINER_TAG, USERNAME, PASSWORD)
+			steps {
+				echo "DockerHub"
 			 }
-	}
-		}
-	}
-    }
+
 }
 
 
