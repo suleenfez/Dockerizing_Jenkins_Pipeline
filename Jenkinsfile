@@ -6,6 +6,11 @@ def HTTP_PORT="8090"
 pipeline {
     agent none
     stages {
+	    
+	stage('Push to Docker Registry'){
+        withCredentials([usernamePassword(credentialsId: 'dockerHubAccount', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+            pushToImage(CONTAINER_NAME, CONTAINER_TAG, USERNAME, PASSWORD) }
+ 	   }
 
 	stage('Non-Parallel Stage') {
 	    agent {
@@ -15,34 +20,8 @@ pipeline {
                 echo 'This stage will be executed first'
                 }
         }
-
-
-        stage('Run Tests') {
-            parallel {
-                stage('Test On Windows') {
-                    agent {
-                        label "Windows_Node"
-                    }
-                    steps {
-                        echo "Task1 on Agent"
-                    }
-
-                }
-                stage('Test On Master') {
-                    agent {
-                        label "master"
-                    }
-                    steps {
-						echo "Task1 on Master"
-					}
-                }
-            }
-        }
-	    
-	stage('Push to Docker Registry'){
-        withCredentials([usernamePassword(credentialsId: 'dockerHubAccount', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-            pushToImage(CONTAINER_NAME, CONTAINER_TAG, USERNAME, PASSWORD)
-        }
-    }
     }
 }
+
+
+
